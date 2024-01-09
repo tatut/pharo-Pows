@@ -21,6 +21,11 @@ PowsHost class >> download [
 ]
 
 { #category : #'as yet unclassified' }
+PowsHost class >> fix [ 
+  Running := 'ws://localhost:3344'
+]
+
+{ #category : #'as yet unclassified' }
 PowsHost class >> getLatestRelease [
 	| json |
 	json := STONJSON fromString: (ZnClient new 

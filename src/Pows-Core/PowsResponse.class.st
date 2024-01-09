@@ -39,3 +39,8 @@ PowsResponse >> json: anObject [
 
 	json := anObject
 ]
+
+{ #category : #accessing }
+PowsResponse >> result [ 
+	^ json at: 'result' ifAbsent: [ true ]
+]

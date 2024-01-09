@@ -61,6 +61,6 @@ PowsConnection >> locate: aLocatorStringOrArray [
 ]
 
 { #category : #'as yet unclassified' }
-PowsConnection >> locator: locator hasText: text [
-	^ self cmd: { #locator -> locator. #has_text -> text }
+PowsConnection >> locate: loc do: block [ 
+	block value: (self locate: loc)
 ]
