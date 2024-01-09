@@ -1,9 +1,6 @@
 Class {
 	#name : #PowsHost,
 	#superclass : #Object,
-	#classVars : [
-		'Running'
-	],
 	#category : #'Pows-Core'
 }
 
@@ -21,11 +18,6 @@ PowsHost class >> download [
 ]
 
 { #category : #'as yet unclassified' }
-PowsHost class >> fix [ 
-  Running := nil.
-]
-
-{ #category : #'as yet unclassified' }
 PowsHost class >> getLatestRelease [
 	| json |
 	json := STONJSON fromString: (ZnClient new 
@@ -36,13 +28,24 @@ PowsHost class >> getLatestRelease [
    ^ json first
 ]
 
+{ #category : #testing }
+PowsHost class >> isRunning [ 
+	[ (ZnWebSocket to: self url)  ] on: Exception  do: [ ^ false  ].
+	^ true
+]
+
 { #category : #starting }
 PowsHost class >> start [ 
 "FIXME: pows should really have a PID-file so we could better detect. Or we could simply try connecting."
-	Running ifNotNil: [ ^ Running ].
-	Running := 'ws://localhost:3344'. "should be configurable?"
+	self isRunning ifTrue: [ ^ self url ].
 	self download. 
 	LibC system: 'java -jar /tmp/pows.jar &'.
-	^ Running
+	[ self isRunning ] whileFalse: [ (Delay forSeconds: 1) wait ].
+	^ self url
 	
+]
+
+{ #category : #accessing }
+PowsHost class >> url [ 
+ ^ 'ws://localhost:3344'. "should be configurable?"
 ]
