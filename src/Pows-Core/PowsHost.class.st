@@ -16,13 +16,13 @@ PowsHost class >> download [
 	releaseUrl := (release at: 'assets') first at: 'browser_download_url'.
 	Transcript show: 'Fetch pows host: ', releaseUrl; cr.
 	"For some reason curl can do it, but ZnClient gets 401"
-	LibC system: 'curl -o /tmp/pows.jar -L ', releaseUrl.
+	LibC resultOfCommand: 'curl -o /tmp/pows.jar -L ', releaseUrl.
 	
 ]
 
 { #category : #'as yet unclassified' }
 PowsHost class >> fix [ 
-  Running := 'ws://localhost:3344'
+  Running := nil.
 ]
 
 { #category : #'as yet unclassified' }
@@ -42,5 +42,7 @@ PowsHost class >> start [
 	Running ifNotNil: [ ^ Running ].
 	Running := 'ws://localhost:3344'. "should be configurable?"
 	self download. 
-	LibC system: 'java -jar /tmp/pows.jar &'
+	LibC system: 'java -jar /tmp/pows.jar &'.
+	^ Running
+	
 ]
