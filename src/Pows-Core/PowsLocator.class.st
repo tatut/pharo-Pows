@@ -18,7 +18,7 @@ PowsLocator >> connection: anObject [
 { #category : #'as yet unclassified' }
 PowsLocator >> doAssert: assertion [
 	| resp | 
-	resp := connection cmd: { #locator -> locator. #not -> not. assertion }.
+	resp := connection cmd: { #locator -> locator asArray. #not -> not. assertion }.
 	resp isSuccess ifTrue: [ ^ true ].
 	PowsAssertionFailure new 
 		messageText: resp error;
@@ -30,7 +30,7 @@ PowsLocator >> doAssert: assertion [
 
 { #category : #testing }
 PowsLocator >> hasText: text [ 
-  ^ self doAssert: #has_text -> text
+  ^ self doAssert: #hasText -> text
 ]
 
 { #category : #initialization }

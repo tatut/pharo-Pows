@@ -2,7 +2,7 @@ Class {
 	#name : #PowsHost,
 	#superclass : #Object,
 	#classVars : [
-		'Uberjar'
+		'Running'
 	],
 	#category : #'Pows-Core'
 }
@@ -33,6 +33,9 @@ PowsHost class >> getLatestRelease [
 
 { #category : #starting }
 PowsHost class >> start [ 
+"FIXME: pows should really have a PID-file so we could better detect. Or we could simply try connecting."
+	Running ifNotNil: [ ^ Running ].
+	Running := 'ws://localhost:3344'. "should be configurable?"
 	self download. 
 	LibC system: 'java -jar /tmp/pows.jar &'
 ]

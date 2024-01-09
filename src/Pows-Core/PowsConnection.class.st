@@ -17,6 +17,15 @@ PowsConnection >> click: locator [
 	^ self cmd: { #locator -> locator. #click -> true }
 ]
 
+{ #category : #'initialize-release' }
+PowsConnection >> close [ 
+ 	connection ifNil: [ ^ nil ]. 
+	connection close. 
+	^ connection := nil.
+	
+  
+]
+
 { #category : #'as yet unclassified' }
 PowsConnection >> cmd: cmdJsonMappings [ 
   | json responseText response | 
@@ -45,7 +54,7 @@ PowsConnection >> go: url [
 { #category : #'as yet unclassified' }
 PowsConnection >> locate: aLocatorStringOrArray [
   ^ PowsLocator new 
-      connection: connection;
+      connection: self;
       locate: aLocatorStringOrArray;
 		yourself.
 
