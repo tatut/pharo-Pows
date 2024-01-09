@@ -2,7 +2,8 @@ Class {
 	#name : #PowsTestCase,
 	#superclass : #TestCase,
 	#instVars : [
-		'connection'
+		'connection',
+		'powsUrl'
 	],
 	#category : #'Pows-Core'
 }
@@ -10,6 +11,13 @@ Class {
 { #category : #'client control' }
 PowsTestCase >> go: url [
   connection go: url
+]
+
+{ #category : #initialization }
+PowsTestCase >> initialize [ 
+ 	super initialize.
+   powsUrl := PowsHost start. 
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -26,9 +34,7 @@ PowsTestCase >> locate: loc do: block [
 
 { #category : #running }
 PowsTestCase >> setUp [ 
-   | powsUrl |
 	super setUp.
-	powsUrl := PowsHost start. 
 	connection := PowsConnection new.
 	connection connect: powsUrl.
 
@@ -37,5 +43,6 @@ PowsTestCase >> setUp [
 { #category : #running }
 PowsTestCase >> tearDown [
 	connection close.
+	connection := nil.
 	super tearDown
 ]
