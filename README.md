@@ -2,6 +2,22 @@
 
 Pharo library for doing browser testing with Playwright using the [Playwright over WebSocket (pows)](https://github.com/tatut/pows) host.
 
+## Installation 
+
+Via Metacello: 
+```smalltalk
+ Metacello new
+   repository: 'github://tatut/pharo-Pows/src';
+   baseline: 'Pows';
+   load.
+```
+
+Or dependency in baseline:
+```smalltalk
+ spec package: 'Pows-Core' with: [ spec repository: 'github://tatut/pharo-Pows' ]
+```
+
+
 ## Usage
 
 You can use the `PowsConnection` directly but for testing you should subclass from `PowsTestCase` which automatically sets up a connection.
